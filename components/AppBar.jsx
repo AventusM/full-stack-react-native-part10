@@ -4,7 +4,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableWithoutFeedback,
-  TouchableOpacity,
 } from "react-native";
 import { Link } from "react-router-native";
 import Constants from "expo-constants";
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   linkMargin: {
-    marginRight: 5,
+    marginRight: 20,
   },
 });
 

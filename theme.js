@@ -1,5 +1,6 @@
 const theme = {
   colors: {
+    grayishTransparent: 'rgba(0,0,0,0.75)',
     white: "#fff",
     mainBackground: "#e1e4e8",
     appbarBackground: "#24292e",

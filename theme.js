@@ -1,10 +1,11 @@
 const theme = {
   colors: {
-    grayishTransparent: 'rgba(0,0,0,0.75)',
+    error: "#d73a4a",
+    grayishTransparent: "rgba(0,0,0,0.75)",
     white: "#fff",
     mainBackground: "#e1e4e8",
     appbarBackground: "#24292e",
-    textPrimary: '#24292e',
+    textPrimary: "#24292e",
     textSecondary: "#586069",
     primary: "#0366d6",
   },

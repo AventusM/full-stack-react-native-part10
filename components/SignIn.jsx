@@ -1,9 +1,17 @@
 import React from "react";
 import { TouchableWithoutFeedback, View, StyleSheet } from "react-native";
-import Text from "./Text";
 import { Formik } from "formik";
+import * as yup from "yup";
+
+import Text from "./Text";
 import FormikTextInput from "./FormikTextInput";
+
 import theme from "../theme";
+
+const validationSchema = yup.object().shape({
+  username: yup.string().required("Username is required"),
+  password: yup.string().required("Password is required"),
+});
 
 const initialValues = {
   username: "",
@@ -22,31 +30,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     textAlign: "center",
   },
-  inputField: {
-    borderColor: theme.colors.grayishTransparent,
-    borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
-    marginBottom: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
 });
 
 /* {...propdrilling allows for TextInput component props to be set from here already} */
 const SignInForm = ({ onSubmit }) => {
   return (
     <View style={styles.container}>
-      <FormikTextInput
-        style={styles.inputField}
-        name="username"
-        placeholder="Username"
-      />
-      <FormikTextInput
-        style={styles.inputField}
-        name="password"
-        placeholder="Password"
-        secureTextEntry
-      />
+      <FormikTextInput name="username" placeholder="Username" />
+      <FormikTextInput name="password" placeholder="Password" secureTextEntry />
       <TouchableWithoutFeedback onPress={onSubmit}>
         <Text style={styles.signInButton} color="textWhite" fontWeight="bold">
           Sign in
@@ -62,7 +53,11 @@ const SignIn = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
       {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
     </Formik>
   );

@@ -33,7 +33,7 @@ const RepositoryList = () => {
       data={data.repositories.edges}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <RepositoryItem node={item.node} />}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.node.id}
     />
   );
 };

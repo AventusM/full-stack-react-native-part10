@@ -6,6 +6,7 @@ export const GET_REPOSITORIES = gql`
       edges {
         node {
           id
+          fullName
           ownerAvatarUrl
           description
           language

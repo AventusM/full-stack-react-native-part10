@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
   },
   mainInfoTextContainer: {
     flexDirection: "column",
+    flexShrink: 1, // Wraps text within mobile devices instead of becoming 'invisible'
     marginLeft: 10,
     marginBottom: 10,
   },

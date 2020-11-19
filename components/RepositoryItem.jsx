@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepositoryItem = (props) => {
+const RepositoryItem = ({ node }) => {
   const {
     ownerAvatarUrl,
     fullName,
@@ -56,7 +56,8 @@ const RepositoryItem = (props) => {
     stargazersCount,
     ratingAverage,
     reviewCount,
-  } = props;
+  } = node;
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>

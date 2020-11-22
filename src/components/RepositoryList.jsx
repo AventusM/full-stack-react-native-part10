@@ -28,12 +28,16 @@ const RepositoryList = () => {
     );
   }
 
+  const repositoryNodes = data.repositories
+    ? data.repositories.edges.map((edge) => edge.node)
+    : [];
+
   return (
     <FlatList
-      data={data.repositories.edges}
+      data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => <RepositoryItem node={item.node} />}
-      keyExtractor={(item) => item.node.id}
+      renderItem={({ item }) => <RepositoryItem {...item} />}
+      keyExtractor={(item) => item.id}
     />
   );
 };

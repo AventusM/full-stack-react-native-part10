@@ -7,6 +7,18 @@ import RepositoryItem from "./RepositoryItem";
 
 import { GET_REPOSITORIES } from "../graphql/queries";
 
+export const RepositoryListContainer = ({ repositories }) => {
+  return (
+    <FlatList
+      testID="repositoryList"
+      data={repositories}
+      ItemSeparatorComponent={ItemSeparator}
+      renderItem={({ item }) => <RepositoryItem {...item} />}
+      keyExtractor={(item) => item.id}
+    />
+  );
+};
+
 const RepositoryList = () => {
   const { data, error, loading } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: "cache-and-network",
@@ -32,14 +44,7 @@ const RepositoryList = () => {
     ? data.repositories.edges.map((edge) => edge.node)
     : [];
 
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => <RepositoryItem {...item} />}
-      keyExtractor={(item) => item.id}
-    />
-  );
+  return <RepositoryListContainer repositories={repositoryNodes} />;
 };
 
 export default RepositoryList;

@@ -60,12 +60,16 @@ const RepositoryItem = (props) => {
   } = props;
 
   return (
-    <View style={styles.container}>
+    <View testID="repositoryItem" style={styles.container}>
       <View style={styles.row}>
         <Image style={styles.imageContainer} source={{ uri: ownerAvatarUrl }} />
         <View style={styles.mainInfoTextContainer}>
-          <Text fontWeight="bold">{fullName}</Text>
-          <Text color="textSecondary">{description}</Text>
+          <Text testID={"fullName"} fontWeight="bold">
+            {fullName}
+          </Text>
+          <Text testID={"description"} color="textSecondary">
+            {description}
+          </Text>
           <View
             style={[
               styles.selfStartAligned,
@@ -73,23 +77,41 @@ const RepositoryItem = (props) => {
               styles.rowMargin,
             ]}
           >
-            <Text color="textWhite">{language}</Text>
+            <Text testID={"language"} color="textWhite">
+              {language}
+            </Text>
           </View>
         </View>
       </View>
       <View style={[styles.row, styles.spacedAround]}>
-        <SecondaryItem metric={stargazersCount} description={"Stars"} />
-        <SecondaryItem metric={forksCount} description={"Forks"} />
-        <SecondaryItem metric={reviewCount} description={"Reviews"} />
-        <SecondaryItem metric={ratingAverage} description={"Rating"} />
+        <SecondaryItem
+          metric={stargazersCount}
+          description={"Stars"}
+          testID={"stars"}
+        />
+        <SecondaryItem
+          metric={forksCount}
+          description={"Forks"}
+          testID={"forks"}
+        />
+        <SecondaryItem
+          metric={reviewCount}
+          description={"Reviews"}
+          testID={"reviews"}
+        />
+        <SecondaryItem
+          metric={ratingAverage}
+          description={"Rating"}
+          testID={"rating"}
+        />
       </View>
     </View>
   );
 };
 
-const SecondaryItem = ({ metric, description }) => {
+const SecondaryItem = ({ metric, description, testID }) => {
   return (
-    <View style={[styles.column, styles.centerAligned]}>
+    <View testID={testID} style={[styles.column, styles.centerAligned]}>
       <Text fontWeight="bold">{formatMetricToK(metric)}</Text>
       <Text color="textSecondary">{description}</Text>
     </View>
@@ -97,7 +119,7 @@ const SecondaryItem = ({ metric, description }) => {
 };
 
 /* Stolen from here https://stackoverflow.com/a/9461657 */
-const formatMetricToK = (metric) =>
+export const formatMetricToK = (metric) =>
   metric >= 1000
     ? Math.sign(metric) * (Math.abs(metric) / 1000).toFixed(1) + "k"
     : Math.sign(metric) * Math.abs(metric);

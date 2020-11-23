@@ -36,7 +36,7 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.linkContainer} horizontal>
-        <AppBarTab title="Repositories" linkRoute="/" />
+        <AppBarTab title="Repositories" linkRoute="/repositories" />
         {data && data.authorizedUser ? (
           <AppBarTab title="Sign out" signOut />
         ) : (

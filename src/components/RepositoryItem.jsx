@@ -1,7 +1,14 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
 import Text from "./Text";
 import theme from "../theme";
+import { useHistory } from "react-router-native";
+import * as Linking from "expo-linking";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,8 +20,8 @@ const styles = StyleSheet.create({
   mainInfoTextContainer: {
     flexDirection: "column",
     flexShrink: 1, // Wraps text within mobile devices instead of becoming 'invisible'
-    marginLeft: 10,
     marginBottom: 10,
+    marginLeft: 10,
   },
   column: {
     flexDirection: "column",
@@ -34,21 +41,30 @@ const styles = StyleSheet.create({
   languagePill: {
     backgroundColor: theme.colors.primary,
     borderRadius: 3,
-    paddingVertical: 3,
     paddingHorizontal: 4,
+    paddingVertical: 3,
   },
   rowMargin: {
     marginVertical: 6,
   },
   imageContainer: {
-    width: 40,
-    height: 40,
     borderRadius: 5,
+    height: 40,
+    width: 40,
+  },
+  linkButton: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: 3,
+    marginTop: 5,
+    paddingVertical: 5,
+    textAlign: "center",
   },
 });
 
 const RepositoryItem = (props) => {
+  const history = useHistory();
   const {
+    id,
     ownerAvatarUrl,
     fullName,
     description,
@@ -57,55 +73,66 @@ const RepositoryItem = (props) => {
     stargazersCount,
     ratingAverage,
     reviewCount,
+    showLink,
+    url,
   } = props;
 
+  const handlePress = () =>
+    !showLink ? history.push(`repositories/${id}`) : null; // No need to push more into history when already in the view
+
   return (
-    <View testID="repositoryItem" style={styles.container}>
-      <View style={styles.row}>
-        <Image style={styles.imageContainer} source={{ uri: ownerAvatarUrl }} />
-        <View style={styles.mainInfoTextContainer}>
-          <Text testID={"fullName"} fontWeight="bold">
-            {fullName}
-          </Text>
-          <Text testID={"description"} color="textSecondary">
-            {description}
-          </Text>
-          <View
-            style={[
-              styles.selfStartAligned,
-              styles.languagePill,
-              styles.rowMargin,
-            ]}
-          >
-            <Text testID={"language"} color="textWhite">
-              {language}
+    <TouchableWithoutFeedback onPress={handlePress}>
+      <View testID="repositoryItem" style={styles.container}>
+        <View style={styles.row}>
+          <Image
+            style={styles.imageContainer}
+            source={{ uri: ownerAvatarUrl }}
+          />
+          <View style={styles.mainInfoTextContainer}>
+            <Text testID={"fullName"} fontWeight="bold">
+              {fullName}
             </Text>
+            <Text testID={"description"} color="textSecondary">
+              {description}
+            </Text>
+            <View
+              style={[
+                styles.selfStartAligned,
+                styles.languagePill,
+                styles.rowMargin,
+              ]}
+            >
+              <Text testID={"language"} color="textWhite">
+                {language}
+              </Text>
+            </View>
           </View>
         </View>
+        <View style={[styles.row, styles.spacedAround]}>
+          <SecondaryItem
+            metric={stargazersCount}
+            description={"Stars"}
+            testID={"stars"}
+          />
+          <SecondaryItem
+            metric={forksCount}
+            description={"Forks"}
+            testID={"forks"}
+          />
+          <SecondaryItem
+            metric={reviewCount}
+            description={"Reviews"}
+            testID={"reviews"}
+          />
+          <SecondaryItem
+            metric={ratingAverage}
+            description={"Rating"}
+            testID={"rating"}
+          />
+        </View>
+        {showLink && <LinkButton url={url} />}
       </View>
-      <View style={[styles.row, styles.spacedAround]}>
-        <SecondaryItem
-          metric={stargazersCount}
-          description={"Stars"}
-          testID={"stars"}
-        />
-        <SecondaryItem
-          metric={forksCount}
-          description={"Forks"}
-          testID={"forks"}
-        />
-        <SecondaryItem
-          metric={reviewCount}
-          description={"Reviews"}
-          testID={"reviews"}
-        />
-        <SecondaryItem
-          metric={ratingAverage}
-          description={"Rating"}
-          testID={"rating"}
-        />
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -115,6 +142,18 @@ const SecondaryItem = ({ metric, description, testID }) => {
       <Text fontWeight="bold">{formatMetricToK(metric)}</Text>
       <Text color="textSecondary">{description}</Text>
     </View>
+  );
+};
+
+const LinkButton = ({ url }) => {
+  return (
+    <TouchableWithoutFeedback onPress={() => Linking.openURL(url)}>
+      <View style={[styles.linkButton]}>
+        <Text color="textWhite" fontWeight="bold">
+          Open in GitHub
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

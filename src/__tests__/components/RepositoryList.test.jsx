@@ -59,43 +59,33 @@ describe("RepositoryList", () => {
       repositories.edges
         .map((edge) => edge.node)
         .forEach((node, index) => {
-          const comparisonNode = repositories.edges[index].node;
+          expect(getAllByTestId("fullName")[index]).toHaveTextContent(
+            node.fullName
+          );
 
-          const renderedFullName = getAllByTestId("fullName")[index];
-          expect(renderedFullName).toHaveTextContent(node.fullName);
-          expect(node.fullName).toBe(comparisonNode.fullName);
+          expect(getAllByTestId("description")[index]).toHaveTextContent(
+            node.description
+          );
 
-          const renderedDescription = getAllByTestId("description")[index];
-          expect(renderedDescription).toHaveTextContent(node.description);
-          expect(node.description).toBe(comparisonNode.description);
+          expect(getAllByTestId("language")[index]).toHaveTextContent(
+            node.language
+          );
 
-          const renderedLanguage = getAllByTestId("language")[index];
-          expect(renderedLanguage).toHaveTextContent(node.language);
-          expect(node.language).toBe(comparisonNode.language);
-
-          const renderedForksCount = getAllByTestId("forks")[index];
-          expect(renderedForksCount).toHaveTextContent(
+          expect(getAllByTestId("forks")[index]).toHaveTextContent(
             formatMetricToK(node.forksCount)
           );
-          expect(node.forksCount).toBe(comparisonNode.forksCount);
 
-          const renderedStargazersCount = getAllByTestId("stars")[index];
-          expect(renderedStargazersCount).toHaveTextContent(
+          expect(getAllByTestId("stars")[index]).toHaveTextContent(
             formatMetricToK(node.stargazersCount)
           );
-          expect(node.stargazersCount).toBe(comparisonNode.stargazersCount);
 
-          const renderedRatingAverage = getAllByTestId("rating")[index];
-          expect(renderedRatingAverage).toHaveTextContent(
+          expect(getAllByTestId("rating")[index]).toHaveTextContent(
             formatMetricToK(node.ratingAverage)
           );
-          expect(node.ratingAverage).toBe(comparisonNode.ratingAverage);
 
-          const renderedReviewCount = getAllByTestId("reviews")[index];
-          expect(renderedReviewCount).toHaveTextContent(
+          expect(getAllByTestId("reviews")[index]).toHaveTextContent(
             formatMetricToK(node.reviewCount)
           );
-          expect(node.reviewCount).toBe(comparisonNode.reviewCount);
         });
     });
   });

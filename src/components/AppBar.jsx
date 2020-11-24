@@ -43,7 +43,10 @@ const AppBar = () => {
             <AppBarTab title="Sign out" signOut />
           </Fragment>
         ) : (
-          <AppBarTab title="Sign in" linkRoute="/signin" />
+          <Fragment>
+            <AppBarTab title="Sign in" linkRoute="/signin" />
+            <AppBarTab title="Sign up" linkRoute="/signup" />
+          </Fragment>
         )}
       </ScrollView>
     </View>

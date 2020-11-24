@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     padding: 10,
-    // Padding + margin
   },
   elementMarginRight: {
     marginRight: 10,
@@ -63,6 +62,7 @@ const ReviewItem = ({ review }) => {
 const SingleRepository = () => {
   let { id } = useParams();
   const { data, error, loading } = useQuery(GET_SINGLE_REPOSITORY, {
+    fetchPolicy: "cache-and-network",
     variables: { id },
   });
 

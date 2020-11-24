@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, Fragment } from "react";
 import {
   View,
   StyleSheet,
   ScrollView,
   TouchableWithoutFeedback,
 } from "react-native";
-import { Link } from "react-router-native";
+import { Link, useHistory } from "react-router-native";
 import { useApolloClient, useQuery } from "@apollo/react-hooks";
 import Constants from "expo-constants";
 
@@ -38,7 +38,10 @@ const AppBar = () => {
       <ScrollView style={styles.linkContainer} horizontal>
         <AppBarTab title="Repositories" linkRoute="/repositories" />
         {data && data.authorizedUser ? (
-          <AppBarTab title="Sign out" signOut />
+          <Fragment>
+            <AppBarTab title="Create a review" linkRoute="/createReview" />
+            <AppBarTab title="Sign out" signOut />
+          </Fragment>
         ) : (
           <AppBarTab title="Sign in" linkRoute="/signin" />
         )}
@@ -55,8 +58,10 @@ const AppBarTab = ({ title, linkRoute, signOut }) => {
 const SignOutButton = ({ title }) => {
   const apolloClient = useApolloClient();
   const authContext = useContext(AuthStorageContext);
+  const history = useHistory();
 
   const logout = async () => {
+    history.push("/signin");
     await authContext.removeAccessToken();
     await apolloClient.resetStore();
   };

@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginTop: 5,
     paddingVertical: 5,
+  },
+  centeredText: {
     textAlign: "center",
   },
 });
@@ -149,7 +151,7 @@ const LinkButton = ({ url }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Linking.openURL(url)}>
       <View style={[styles.linkButton]}>
-        <Text color="textWhite" fontWeight="bold">
+        <Text style={[styles.centeredText]} color="textWhite" fontWeight="bold">
           Open in GitHub
         </Text>
       </View>

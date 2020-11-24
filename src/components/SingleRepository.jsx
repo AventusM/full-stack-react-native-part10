@@ -9,6 +9,7 @@ import RepositoryItem from "./RepositoryItem";
 import ItemSeparator from "./ItemSeparator";
 import { GET_SINGLE_REPOSITORY } from "../graphql/queries";
 import theme from "../theme";
+import useSingleRepository from "../hooks/useSingleRepository";
 
 const styles = StyleSheet.create({
   reviewContainer: {
@@ -60,31 +61,12 @@ const ReviewItem = ({ review }) => {
 };
 
 const SingleRepository = () => {
-  let { id } = useParams();
-  const { data, error, loading } = useQuery(GET_SINGLE_REPOSITORY, {
-    fetchPolicy: "cache-and-network",
-    variables: { id },
-  });
+  const { id } = useParams();
+  const { repository } = useSingleRepository(id);
 
-  if (loading) {
-    return (
-      <View>
-        <Text>Loading</Text>
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View>
-        <Text>Error fetching data</Text>
-      </View>
-    );
-  }
-
-  const repositoryInfo = data.repository ?? null;
-  const repositoryReviews = data.repository
-    ? data.repository.reviews.edges.map((edge) => edge.node)
+  const repositoryInfo = repository ? repository : null;
+  const repositoryReviews = repository
+    ? repository.reviews.edges.map((edge) => edge.node)
     : [];
 
   return (

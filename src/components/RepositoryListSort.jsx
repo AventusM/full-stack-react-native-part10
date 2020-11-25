@@ -2,17 +2,21 @@ import React, { useState, Fragment } from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { IconButton, Modal, Portal } from "react-native-paper";
 
+import {
+  LOWEST_RATED_REPOSITORIES_CONSTANT,
+  HIGHEST_RATED_REPOSITORIES_CONSTANT,
+  LATEST_REPOSITORIES_CONSTANT,
+} from "./RepositoryList";
+
 import Text from "./Text";
 import theme from "../theme";
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: theme.colors.mainBackground,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
   },
   modalContentContainer: {
     backgroundColor: "white",
@@ -27,10 +31,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalOption = ({ text, last, orderingFunction, hideModal, setTitle }) => {
+const ModalOption = ({ text, last, orderingFunction, hideModal }) => {
   const selectAndHideModal = () => {
     orderingFunction();
-    setTitle(text);
     hideModal();
   };
 
@@ -45,7 +48,6 @@ const ModalOption = ({ text, last, orderingFunction, hideModal, setTitle }) => {
 };
 
 const RepositoryListSort = ({ orderingFunctions }) => {
-  const [title, setTitle] = useState("Latest repositories"); // Probably should derive status from props, but this works currently
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -62,28 +64,25 @@ const RepositoryListSort = ({ orderingFunctions }) => {
           <View style={styles.spacer} />
           <ModalOption
             hideModal={hideModal}
-            setTitle={setTitle}
             orderingFunction={orderingFunctions.orderByLatestRepositories}
-            text="Latest repositories"
+            text={LATEST_REPOSITORIES_CONSTANT}
           />
           <ModalOption
             hideModal={hideModal}
-            setTitle={setTitle}
             orderingFunction={orderingFunctions.orderByHighestRatedRepositories}
-            text="Highest rated repositories"
+            text={HIGHEST_RATED_REPOSITORIES_CONSTANT}
           />
           <ModalOption
             hideModal={hideModal}
-            setTitle={setTitle}
             orderingFunction={orderingFunctions.orderByLowestRatedRepositories}
-            text="Lowest rated repositories"
+            text={LOWEST_RATED_REPOSITORIES_CONSTANT}
             last
           />
         </Modal>
       </Portal>
       <TouchableWithoutFeedback onPress={showModal}>
         <View style={styles.container}>
-          <Text>{title}</Text>
+          <Text>{orderingFunctions.orderTitle}</Text>
           <IconButton
             icon={visible ? "chevron-up" : "chevron-down"}
             size={16}

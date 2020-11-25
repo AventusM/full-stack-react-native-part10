@@ -27,9 +27,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalOption = ({ text, last }) => {
+const ModalOption = ({ text, last, orderingFunction, hideModal, setTitle }) => {
+  const selectAndHideModal = () => {
+    orderingFunction();
+    setTitle(text);
+    hideModal();
+  };
+
   return (
-    <TouchableWithoutFeedback onPress={() => console.log("pressed:", text)}>
+    <TouchableWithoutFeedback onPress={selectAndHideModal}>
       <View>
         <Text fontWeight="bold">{text}</Text>
         {!last && <View style={styles.spacer} />}
@@ -38,7 +44,8 @@ const ModalOption = ({ text, last }) => {
   );
 };
 
-const RepositoryListSort = () => {
+const RepositoryListSort = ({ orderingFunctions }) => {
+  const [title, setTitle] = useState("Latest repositories"); // Probably should derive status from props, but this works currently
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -53,14 +60,30 @@ const RepositoryListSort = () => {
         >
           <Text color="textSecondary">Select an item...</Text>
           <View style={styles.spacer} />
-          <ModalOption text="Latest repositories" />
-          <ModalOption text="Highest rated repositories" />
-          <ModalOption text="Lowest rated repositories" last />
+          <ModalOption
+            hideModal={hideModal}
+            setTitle={setTitle}
+            orderingFunction={orderingFunctions.orderByLatestRepositories}
+            text="Latest repositories"
+          />
+          <ModalOption
+            hideModal={hideModal}
+            setTitle={setTitle}
+            orderingFunction={orderingFunctions.orderByHighestRatedRepositories}
+            text="Highest rated repositories"
+          />
+          <ModalOption
+            hideModal={hideModal}
+            setTitle={setTitle}
+            orderingFunction={orderingFunctions.orderByLowestRatedRepositories}
+            text="Lowest rated repositories"
+            last
+          />
         </Modal>
       </Portal>
       <TouchableWithoutFeedback onPress={showModal}>
         <View style={styles.container}>
-          <Text>SET Order type from response</Text>
+          <Text>{title}</Text>
           <IconButton
             icon={visible ? "chevron-up" : "chevron-down"}
             size={16}

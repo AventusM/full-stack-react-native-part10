@@ -32,7 +32,18 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data } = useQuery(GET_AUTHORIZED_USER); // TODO: skeletons with loading prop
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
+  const { data } = useQuery(GET_AUTHORIZED_USER);
   return (
     <View style={styles.container}>
       <ScrollView style={styles.linkContainer} horizontal>

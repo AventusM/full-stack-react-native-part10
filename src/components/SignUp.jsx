@@ -80,7 +80,6 @@ const SignUp = () => {
     try {
       // 1. Sign up
       await signUp({ username, password });
-      console.log("todo signup");
       // 2. Sign in
       await signIn({ username, password });
       history.push("/repositories"); // Repositories view

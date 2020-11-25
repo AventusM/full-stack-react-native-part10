@@ -1,13 +1,11 @@
 import React, { Fragment } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
-import { useQuery } from "@apollo/react-hooks";
 import { useParams } from "react-router-native";
 import { format } from "date-fns";
 
 import Text from "./Text";
 import RepositoryItem from "./RepositoryItem";
 import ItemSeparator from "./ItemSeparator";
-import { GET_SINGLE_REPOSITORY } from "../graphql/queries";
 import theme from "../theme";
 import useSingleRepository from "../hooks/useSingleRepository";
 

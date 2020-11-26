@@ -6,7 +6,7 @@ import {
   LOWEST_RATED_REPOSITORIES_CONSTANT,
   HIGHEST_RATED_REPOSITORIES_CONSTANT,
   LATEST_REPOSITORIES_CONSTANT,
-} from "./RepositoryList";
+} from "../constants";
 
 import Text from "./Text";
 import theme from "../theme";

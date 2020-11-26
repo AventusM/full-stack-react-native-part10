@@ -60,12 +60,17 @@ const ReviewItem = ({ review }) => {
 
 const SingleRepository = () => {
   const { id } = useParams();
-  const { repository } = useSingleRepository(id);
+  const variables = { id, first: 5 };
+  const { repository, fetchMore } = useSingleRepository(variables);
 
   const repositoryInfo = repository ? repository : null;
   const repositoryReviews = repository
     ? repository.reviews.edges.map((edge) => edge.node)
     : [];
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <FlatList
@@ -74,6 +79,8 @@ const SingleRepository = () => {
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => <RepositoryInfo repository={repositoryInfo} />}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

@@ -11,6 +11,16 @@ import TextInput from "./TextInput";
 import useRepositories from "../hooks/useRepositories";
 import theme from "../theme";
 
+import {
+  ASC_CONSTANT,
+  DESC_CONSTANT,
+  LOWEST_RATED_REPOSITORIES_CONSTANT,
+  CREATED_AT_CONSTANT,
+  HIGHEST_RATED_REPOSITORIES_CONSTANT,
+  LATEST_REPOSITORIES_CONSTANT,
+  RATING_AVERAGE_CONSTANT,
+} from "../constants";
+
 const styles = StyleSheet.create({
   headerContainer: {
     display: "flex",
@@ -51,7 +61,7 @@ export class RepositoryListContainer extends React.Component {
   };
 
   render() {
-    const { repositories } = this.props;
+    const { repositories, onEndReach } = this.props;
     return (
       <FlatList
         testID="repositoryList"
@@ -60,19 +70,12 @@ export class RepositoryListContainer extends React.Component {
         renderItem={({ item }) => <RepositoryItem {...item} />}
         ListHeaderComponent={this.renderHeader}
         keyExtractor={(item) => item.id}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
 }
-
-const CREATED_AT_CONSTANT = "CREATED_AT";
-const RATING_AVERAGE_CONSTANT = "RATING_AVERAGE";
-const ASC_CONSTANT = "ASC";
-const DESC_CONSTANT = "DESC";
-
-export const LATEST_REPOSITORIES_CONSTANT = "Latest repositories";
-export const HIGHEST_RATED_REPOSITORIES_CONSTANT = "Highest rated repositories";
-export const LOWEST_RATED_REPOSITORIES_CONSTANT = "Lowest rated repositories";
 
 const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState(CREATED_AT_CONSTANT);
@@ -80,13 +83,16 @@ const RepositoryList = () => {
   const [orderTitle, setOrderTitle] = useState(LATEST_REPOSITORIES_CONSTANT);
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const orderingOptions = { orderBy, orderDirection };
-  const searchOptions = { searchKeyword };
-  const { repositories } = useRepositories(orderingOptions, searchOptions);
+  const variables = { orderBy, orderDirection, searchKeyword, first: 15 };
+  const { repositories, fetchMore } = useRepositories(variables);
 
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   const orderByLatestRepositories = () => {
     setOrderBy(CREATED_AT_CONSTANT);
@@ -126,6 +132,7 @@ const RepositoryList = () => {
       repositories={repositoryNodes}
       orderingFunctions={orderingFunctions}
       searchFunctions={searchFunctions}
+      onEndReach={onEndReach}
     />
   );
 };

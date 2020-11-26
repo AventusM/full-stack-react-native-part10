@@ -32,17 +32,6 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
-  // TODO: create useAuthUser or something like that of a hook since using useQuery directly is not recommended here
   const { data } = useQuery(GET_AUTHORIZED_USER);
   return (
     <View style={styles.container}>
@@ -75,7 +64,7 @@ const SignOutButton = ({ title }) => {
   const history = useHistory();
 
   const logout = async () => {
-    history.push("/signin");
+    history.push("/repositories");
     await authContext.removeAccessToken();
     await apolloClient.resetStore();
   };

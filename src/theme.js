@@ -10,6 +10,7 @@ const theme = {
     textPrimary: "#24292e",
     textSecondary: "#586069",
     primary: "#0366d6",
+    opaquePrimary: "rgba(3,102,214, 0.15)"
   },
   fontSizes: {
     body: 14,

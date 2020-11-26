@@ -39,7 +39,7 @@ const RepositoryInfo = ({ repository }) => {
   );
 };
 
-const ReviewItem = ({ review }) => {
+export const ReviewItem = ({ review, showRepoName }) => {
   return (
     <View style={styles.reviewContainer}>
       <View style={[styles.reviewRatingContainer, styles.elementMarginRight]}>
@@ -48,7 +48,9 @@ const ReviewItem = ({ review }) => {
         </Text>
       </View>
       <View style={styles.reviewTextContainer}>
-        <Text fontWeight="bold">{review.user.username}</Text>
+        <Text fontWeight="bold">
+          {showRepoName ? review.repository.fullName : review.user.username}
+        </Text>
         <Text color="textSecondary">
           {format(new Date(review.createdAt), "dd.MM.yyyy")}
         </Text>

@@ -6,14 +6,14 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { Link, useHistory } from "react-router-native";
-import { useApolloClient, useQuery } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/react-hooks";
 import Constants from "expo-constants";
 
 import Text from "./Text";
 
-import { GET_AUTHORIZED_USER } from "../graphql/queries";
 import theme from "../theme";
 import AuthStorageContext from "../contexts/AuthStorageContext";
+import useAuthUser from "../hooks/useAuthUser";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data } = useQuery(GET_AUTHORIZED_USER);
+  const { data } = useAuthUser({ includeReviews: false });
   return (
     <View style={styles.container}>
       <ScrollView style={styles.linkContainer} horizontal>
@@ -40,6 +40,7 @@ const AppBar = () => {
         {data && data.authorizedUser ? (
           <Fragment>
             <AppBarTab title="Create a review" linkRoute="/createReview" />
+            <AppBarTab title="My reviews" linkRoute="/myreviews" />
             <AppBarTab title="Sign out" signOut />
           </Fragment>
         ) : (
